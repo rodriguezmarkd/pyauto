@@ -8,7 +8,7 @@ Compiled Mon 08-Aug-22 15:22 by mcpre
 
 ROM: Bootstrap program is IOSv
 
-lax-edg-r1 uptime is 3 hours, 31 minutes
+lax-edg-r1 uptime is 43 minutes
 System returned to ROM by reload
 System image file is "flash0:/vios-adventerprisek9-m"
 Last reload reason: Unknown reason
@@ -47,9 +47,9 @@ Configuration register is 0x0
 show run
 Building configuration...
 
-Current configuration : 4006 bytes
+Current configuration : 4015 bytes
 !
-! Last configuration change at 18:20:51 UTC Sun Oct 8 2023
+! Last configuration change at 22:23:17 UTC Sun Oct 8 2023 by cisco
 !
 version 15.9
 service timestamps debug datetime msec
