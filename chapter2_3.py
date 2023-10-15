@@ -2,9 +2,9 @@
 
 import paramiko, getpass, time
 
-devices = {'lax-edg-r1': {'ip':'10.32.1.201'},
-        'lax-edg-r2' : {'ip':'10.32.1.202'}}
-commands = {'show version\n', 'show run\n'}
+devices = {'lax-edg-r1': {'ip':'10.32.1.205'},
+        'lax-edg-r2' : {'ip':'10.32.1.206'}}
+commands = {'show version\n', 'show run\n', 'show mac address-table\n'}
 
 username = input('Username: ')
 password = getpass.getpass('Password: ')
