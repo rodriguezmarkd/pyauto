@@ -1,0 +1,8 @@
+---
+- name: Template Basic
+  hosts: localhost
+  tasks:
+    - name: copy one file to another
+      template:
+        src=/home/mark/pyauto/chapter4/Templates/file1
+        dest=/home/mark/pyauto/chapter4/Templates/file2
