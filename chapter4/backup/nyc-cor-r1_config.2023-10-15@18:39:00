@@ -1,0 +1,238 @@
+!Command: show running-config
+!No configuration change since last restart
+!Time: Sun Oct 15 18:13:50 2023
+
+version 10.3(1) Bios:version  
+hostname nyc-cor-r1
+vdc nyc-cor-r1 id 1
+  limit-resource vlan minimum 16 maximum 4094
+  limit-resource vrf minimum 2 maximum 4096
+  limit-resource port-channel minimum 0 maximum 511
+  limit-resource m4route-mem minimum 58 maximum 58
+  limit-resource m6route-mem minimum 8 maximum 8
+
+feature telnet
+feature nxapi
+feature ospf
+feature bgp
+
+no password strength-check
+username admin password 5 $1$KuOSBsvW$Cy0TSD..gEBGBPjzpDgf51  role network-admin
+username adminbackup password 5 !  role network-operator
+username adminbackup passphrase  lifetime 99999 warntime 14 gracetime 3
+username cisco password 5 $1$Nk7ZkwH0$fyiRmMMfIheqE3BqvcL0C1  role network-operator
+username cisco role network-admin
+username cisco passphrase  lifetime 99999 warntime 14 gracetime 3
+username lab password 5 $1$buoy/oqy$.EXQz8rCn72ii8qtdldj00  role network-admin
+username lab passphrase  lifetime 99999 warntime 14 gracetime 3
+ip domain-lookup
+vlan dot1Q tag native
+copp profile strict
+snmp-server user lab network-admin auth md5 0x5ceb414591539ee35159fca86fdfa101 priv des 0x5ceb414591539ee35159fca86fdfa101 localizedkey
+snmp-server user admin network-admin auth md5 0x328945d53e05e8e7207f8c20b142f0b7 priv des 0x328945d53e05e8e7207f8c20b142f0b7 localizedkey
+snmp-server user cisco network-admin auth md5 0x55b3c64a53fb95518e75358ee75e82e9 priv des 0x55b3c64a53fb95518e75358ee75e82e9 localizedkey
+snmp-server user cisco network-operator
+snmp-server user admin auth md5 0x328945d53e05e8e7207f8c20b142f0b7 priv des 0x328945d53e05e8e7207f8c20b142f0b7 localizedkey engineID 128:0:0:9:3:0:0:0:0:0:0
+rmon event 1 log trap public description FATAL(1) owner PMON@FATAL
+rmon event 2 log trap public description CRITICAL(2) owner PMON@CRITICAL
+rmon event 3 log trap public description ERROR(3) owner PMON@ERROR
+rmon event 4 log trap public description WARNING(4) owner PMON@WARNING
+rmon event 5 log trap public description INFORMATION(5) owner PMON@INFO
+snmp-server enable traps link cisco-xcvr-mon-status-chg
+no logging event trunk-status enable
+
+ip route 10.1.0.0/30 Null0 254
+ip route 10.1.128.0/30 Null0 254
+vlan 1
+
+vrf context management
+hardware forwarding unicast trace
+
+nxapi http port 80
+
+
+interface Ethernet1/1
+  description to nyc-edg-r1
+  no switchport
+  mac-address fa16.3e00.0005
+  ip address 10.1.0.2/30
+  ip router ospf 200 area 0.0.0.200
+  no shutdown
+
+interface Ethernet1/2
+  description to nyc-edg-r2
+  no switchport
+  mac-address fa16.3e00.0006
+  ip address 10.1.128.1/30
+  ip router ospf 200 area 0.0.0.200
+  no shutdown
+
+interface Ethernet1/3
+  description to lax-cor-r1
+  no switchport
+  mac-address fa16.3e00.0007
+  ip address 10.1.0.6/30
+  no shutdown
+
+interface Ethernet1/4
+
+interface Ethernet1/5
+
+interface Ethernet1/6
+
+interface Ethernet1/7
+
+interface Ethernet1/8
+
+interface Ethernet1/9
+
+interface Ethernet1/10
+
+interface Ethernet1/11
+
+interface Ethernet1/12
+
+interface Ethernet1/13
+
+interface Ethernet1/14
+
+interface Ethernet1/15
+
+interface Ethernet1/16
+
+interface Ethernet1/17
+
+interface Ethernet1/18
+
+interface Ethernet1/19
+
+interface Ethernet1/20
+
+interface Ethernet1/21
+
+interface Ethernet1/22
+
+interface Ethernet1/23
+
+interface Ethernet1/24
+
+interface Ethernet1/25
+
+interface Ethernet1/26
+
+interface Ethernet1/27
+
+interface Ethernet1/28
+
+interface Ethernet1/29
+
+interface Ethernet1/30
+
+interface Ethernet1/31
+
+interface Ethernet1/32
+
+interface Ethernet1/33
+
+interface Ethernet1/34
+
+interface Ethernet1/35
+
+interface Ethernet1/36
+
+interface Ethernet1/37
+
+interface Ethernet1/38
+
+interface Ethernet1/39
+
+interface Ethernet1/40
+
+interface Ethernet1/41
+
+interface Ethernet1/42
+
+interface Ethernet1/43
+
+interface Ethernet1/44
+
+interface Ethernet1/45
+
+interface Ethernet1/46
+
+interface Ethernet1/47
+
+interface Ethernet1/48
+
+interface Ethernet1/49
+
+interface Ethernet1/50
+
+interface Ethernet1/51
+
+interface Ethernet1/52
+
+interface Ethernet1/53
+
+interface Ethernet1/54
+
+interface Ethernet1/55
+
+interface Ethernet1/56
+
+interface Ethernet1/57
+
+interface Ethernet1/58
+
+interface Ethernet1/59
+
+interface Ethernet1/60
+
+interface Ethernet1/61
+
+interface Ethernet1/62
+
+interface Ethernet1/63
+
+interface Ethernet1/64
+
+interface mgmt0
+  description OOB Management
+  duplex full
+  vrf member management
+  ip address 10.32.1.206/24
+
+interface loopback0
+  description Loopback
+  ip address 192.168.0.101/32
+  ip router ospf 200 area 0.0.0.200
+icam monitor scale
+
+line console
+line vty
+router ospf 200
+  router-id 192.168.0.101
+router bgp 200
+  router-id 192.168.0.101
+  address-family ipv4 unicast
+    network 10.1.0.0/30
+    network 10.1.128.0/30
+    network 192.168.0.101/32
+  neighbor 10.1.0.5
+    remote-as 100
+    description eBGP peer lax-cor-r1
+    address-family ipv4 unicast
+      send-community
+      next-hop-self
+  neighbor 192.168.0.12
+    remote-as 200
+    description iBGP peer nyc-edg-r1
+    update-source loopback0
+    address-family ipv4 unicast
+      next-hop-self
+  neighbor 192.168.0.13
+    remote-as 200
+    description iBGP peer nyc-edg-r2
+    update-source loopback0
+    address-family ipv4 unicast
+      next-hop-self
